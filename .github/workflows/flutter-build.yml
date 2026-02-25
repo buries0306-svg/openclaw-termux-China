@@ -107,8 +107,11 @@ jobs:
         continue-on-error: true
 
       - name: Build fat APK (all ABIs)
-        working-directory: flutter_app
-        run: flutter build apk --release
+  working-directory: flutter_app
+  env:
+    GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+  run: flutter build apk --release
+
 
       - name: Build per-ABI APKs
         working-directory: flutter_app
