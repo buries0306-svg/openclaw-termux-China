@@ -11,6 +11,7 @@ import 'terminal_screen.dart';
 import 'web_dashboard_screen.dart';
 import 'logs_screen.dart';
 import 'packages_screen.dart';
+import '../l10n.dart';
 import 'settings_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -22,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OpenClaw'),
+        title: Text(L10n.t('openclaw')),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -42,7 +43,7 @@ class DashboardScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 4, bottom: 8),
               child: Text(
-                'QUICK ACTIONS',
+                L10n.t('quick_actions'),
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w600,
@@ -51,8 +52,8 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             StatusCard(
-              title: 'Terminal',
-              subtitle: 'Open Ubuntu shell with OpenClaw',
+              title: L10n.t('terminal'),
+              subtitle: L10n.t('open_ubuntu_shell'),
               icon: Icons.terminal,
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
@@ -62,10 +63,10 @@ class DashboardScreen extends StatelessWidget {
             Consumer<GatewayProvider>(
               builder: (context, provider, _) {
                 return StatusCard(
-                  title: 'Web Dashboard',
+                  title: L10n.t('web_dashboard'),
                   subtitle: provider.state.isRunning
-                      ? 'Open OpenClaw dashboard in browser'
-                      : 'Start gateway first',
+                      ? L10n.t('open_openclaw_dashboard')
+                      : L10n.t('start_gateway_first'),
                   icon: Icons.dashboard,
                   trailing: const Icon(Icons.chevron_right),
                   onTap: provider.state.isRunning
@@ -81,8 +82,8 @@ class DashboardScreen extends StatelessWidget {
               },
             ),
             StatusCard(
-              title: 'Onboarding',
-              subtitle: 'Configure API keys and binding',
+              title: L10n.t('onboarding'),
+              subtitle: L10n.t('configure_api_keys_and_binding'),
               icon: Icons.vpn_key,
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
@@ -90,8 +91,8 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             StatusCard(
-              title: 'Packages',
-              subtitle: 'Install optional tools (Go, Homebrew)',
+              title: L10n.t('packages'),
+              subtitle: L10n.t('install_optional_tools'),
               icon: Icons.extension,
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
@@ -99,8 +100,8 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             StatusCard(
-              title: 'Logs',
-              subtitle: 'View gateway output and errors',
+              title: L10n.t('logs'),
+              subtitle: L10n.t('view_gateway_output'),
               icon: Icons.article_outlined,
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
@@ -111,11 +112,11 @@ class DashboardScreen extends StatelessWidget {
               builder: (context, nodeProvider, _) {
                 final nodeState = nodeProvider.state;
                 return StatusCard(
-                  title: 'Node',
+                  title: L10n.t('node'),
                   subtitle: nodeState.isPaired
-                      ? 'Connected to gateway'
+                      ? L10n.t('connected_to_gateway')
                       : nodeState.isDisabled
-                          ? 'Device capabilities for AI'
+                          ? L10n.t('device_capabilities_for_ai')
                           : nodeState.statusText,
                   icon: Icons.devices,
                   trailing: const Icon(Icons.chevron_right),

@@ -5,6 +5,7 @@ import 'package:xterm/xterm.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants.dart';
+import '../l10n.dart';
 import '../services/native_bridge.dart';
 import '../services/terminal_service.dart';
 import '../services/preferences_service.dart';
@@ -363,7 +364,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OpenClaw Onboarding'),
+        title: Text(L10n.t('onboarding_title')),
         leading: widget.isFirstRun
             ? null // no back button during first-run
             : IconButton(
@@ -399,7 +400,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     CircularProgressIndicator(),
                     SizedBox(height: 16),
-                    Text('Starting onboarding...'),
+                    Text(L10n.t('starting_onboarding')),
                   ],
                 ),
               ),
@@ -434,7 +435,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           _startOnboarding();
                         },
                         icon: const Icon(Icons.refresh),
-                        label: const Text('Retry'),
+                        label: Text(L10n.t('retry')),
                       ),
                     ],
                   ),
@@ -470,8 +471,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ? Icons.arrow_forward
                       : Icons.check),
                   label: Text(widget.isFirstRun
-                      ? 'Go to Dashboard'
-                      : 'Done'),
+                      ? L10n.t('go_to_dashboard')
+                      : L10n.t('done')),
                 ),
               ),
             ),
