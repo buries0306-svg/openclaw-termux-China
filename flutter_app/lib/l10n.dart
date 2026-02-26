@@ -146,11 +146,6 @@ class L10n {
     'permission_required': '需要权限',
     'request_permission': '请求权限',
     
-    // 日志屏幕
-    'search_logs': '搜索日志',
-    'clear_logs': '清除日志',
-    'no_logs': '暂无日志',
-    
     // 软件包
     'packages_screen': '软件包',
     'installing_package': '正在安装软件包',
