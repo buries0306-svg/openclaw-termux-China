@@ -93,7 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         'echo "Configure your API keys and binding settings." && '
         'echo "TIP: Select Loopback (127.0.0.1) when asked for binding!" && '
         'echo "" && '
-        'echo -e "Yes\\n" | openclaw onboard; '
+        'openclaw onboard; '
         'echo "" && echo "Onboarding complete! You can close this screen."',
       ]);
 
