@@ -147,7 +147,6 @@ class L10n {
     'request_permission': '请求权限',
     
     // 日志屏幕
-    'logs_screen': '日志',
     'search_logs': '搜索日志',
     'clear_logs': '清除日志',
     'no_logs': '暂无日志',
