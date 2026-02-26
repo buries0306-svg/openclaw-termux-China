@@ -184,7 +184,6 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
             progress: state.step == step ? state.progress : null,
           ),
         if (state.isComplete) ...[
-          // 修复：删除 const 关键字
           ProgressStep(
             stepNumber: 6,
             label: L10n.t('setup_complete'),
@@ -251,8 +250,8 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
         subtitle: Text('${package.description} (${package.estimatedSize})'),
         trailing: installed
             ? const Icon(Icons.check_circle, color: AppColors.statusGreen)
-            : OutlinedPressed: () =>Button(
-                on _installPackage(package),
+            : OutlinedButton(
+                onPressed: () => _installPackage(package),
                 child: Text(L10n.t('install')),
               ),
       ),
