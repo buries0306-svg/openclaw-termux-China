@@ -393,18 +393,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Column(
         children: [
           if (_loading)
-            const Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text(L10n.t('starting_onboarding')),
-                  ],
-                ),
-              ),
-            )
+Expanded(
+  child: Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircularProgressIndicator(),
+        SizedBox(height: 16),
+        Text(L10n.t('starting_onboarding')),
+      ],
+    ),
+  ),
+)
           else if (_error != null)
             Expanded(
               child: Center(
