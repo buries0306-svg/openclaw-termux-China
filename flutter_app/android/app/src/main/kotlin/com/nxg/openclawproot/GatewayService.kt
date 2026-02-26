@@ -80,6 +80,32 @@ class GatewayService : Service() {
                 val nativeLibDir = applicationContext.applicationInfo.nativeLibraryDir
                 val pm = ProcessManager(filesDir, nativeLibDir)
 
+                // First check if openclaw is installed
+                emitLog("[INFO] Checking openclaw installation...")
+                try {
+                    val checkCmd = pm.buildInstallCommand("which openclaw")
+                    val checkEnv = pm.prootEnv()
+                    val checkPb = ProcessBuilder(checkCmd)
+                    checkPb.environment().clear()
+                    checkPb.environment().putAll(checkEnv)
+                    checkPb.redirectErrorStream(true)
+                    val checkProcess = checkPb.start()
+                    val checkOutput = checkProcess.inputStream.bufferedReader().readText()
+                    val checkExit = checkProcess.waitFor(10, java.util.concurrent.TimeUnit.SECONDS)
+                    if (!checkExit || checkExit && checkProcess.exitValue() != 0) {
+                        emitLog("[ERROR] openclaw command not found. Please run onboarding first.")
+                        emitLog("[ERROR] Use the terminal to run: openclaw onboard")
+                        isRunning = false
+                        updateNotification("OpenClaw not installed")
+                        return@Thread
+                    }
+                    emitLog("[INFO] openclaw found")
+                } catch (e: Exception) {
+                    emitLog("[ERROR] Failed to check openclaw: ${e.message}")
+                }
+
+                // Now start the gateway
+                emitLog("[INFO] Starting gateway...")
                 gatewayProcess = pm.startProotProcess("openclaw gateway --verbose")
                 updateNotificationRunning()
                 emitLog("Gateway started")
