@@ -142,6 +142,7 @@ class _TerminalToolbarState extends State<TerminalToolbar> {
               keyButton('END', sendData: '\x1b[F'),
               keyButton('PGUP', sendData: '\x1b[5~'),
               keyButton('PGDN', sendData: '\x1b[6~'),
+              keyButton('ENTER', sendData: '\n'),
               const SizedBox(width: 4),
               keyButton('-', sendData: '-'),
               keyButton('/', sendData: '/'),
