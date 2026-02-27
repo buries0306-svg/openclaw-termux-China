@@ -84,10 +84,15 @@ class GatewayService : Service() {
                 emitLog("[INFO] Checking openclaw installation...")
                 try {
                     val checkCmd = pm.buildInstallCommand("which openclaw")
-                    val checkEnv = pm.prootEnv()
+                    val env = mapOf(
+                        "PROOT_TMP_DIR" to "$filesDir/tmp",
+                        "PROOT_LOADER" to "$nativeLibDir/libprootloader.so",
+                        "PROOT_LOADER_32" to "$nativeLibDir/libprootloader32.so",
+                        "LD_LIBRARY_PATH" to "$filesDir/lib:$nativeLibDir"
+                    )
                     val checkPb = ProcessBuilder(checkCmd)
                     checkPb.environment().clear()
-                    checkPb.environment().putAll(checkEnv)
+                    checkPb.environment().putAll(env)
                     checkPb.redirectErrorStream(true)
                     val checkProcess = checkPb.start()
                     val checkOutput = checkProcess.inputStream.bufferedReader().readText()
@@ -142,7 +147,7 @@ class GatewayService : Service() {
 
                 if (isRunning && restartCount < maxRestarts) {
                     restartCount++
-                    val delayMs = 2000L * (1 shl (restartCount - 1)) // 2s, 4s, 8s
+                    val delayMs = 2000L * (1 shl (restartCount - 1))
                     emitLog("Auto-restarting in ${delayMs / 1000}s (attempt $restartCount/$maxRestarts)...")
                     updateNotification("Restarting in ${delayMs / 1000}s (attempt $restartCount)...")
                     Thread.sleep(delayMs)
@@ -161,7 +166,7 @@ class GatewayService : Service() {
     }
 
     private fun stopGateway() {
-        restartCount = maxRestarts // Prevent auto-restart
+        restartCount = maxRestarts
         uptimeThread?.interrupt()
         uptimeThread = null
         gatewayProcess?.let {
@@ -176,7 +181,7 @@ class GatewayService : Service() {
         uptimeThread = Thread {
             try {
                 while (!Thread.interrupted() && isRunning) {
-                    Thread.sleep(60_000) // Update every minute
+                    Thread.sleep(60_000)
                     if (isRunning) {
                         updateNotificationRunning()
                     }
@@ -213,7 +218,7 @@ class GatewayService : Service() {
             PowerManager.PARTIAL_WAKE_LOCK,
             "OpenClaw::GatewayWakeLock"
         )
-        wakeLock?.acquire(24 * 60 * 60 * 1000L) // 24 hours max
+        wakeLock?.acquire(24 * 60 * 60 * 1000L)
     }
 
     private fun releaseWakeLock() {
@@ -257,7 +262,6 @@ class GatewayService : Service() {
             .setContentIntent(pendingIntent)
             .setOngoing(true)
 
-        // Show elapsed time chronometer when running
         if (isRunning && startTime > 0) {
             builder.setWhen(startTime)
             builder.setShowWhen(true)
